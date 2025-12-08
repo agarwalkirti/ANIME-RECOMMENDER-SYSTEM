@@ -14,11 +14,17 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-## Copying ur all contents from local to app[docker container]
-COPY . .
+# Copy dependency files first
+COPY requirements.txt .
+COPY setup.py .
 
 ## Run setup.py #--no-cache-dir for fresh start everytime no last time cache used
 RUN pip install --no-cache-dir -e .
+# Install Python packages
+#RUN pip install --no-cache-dir -r requirements.txt
+
+## Copying ur all contents from local to app[docker container]
+COPY . .
 
 # Used PORTS streamlit port is 8501
 EXPOSE 8501
