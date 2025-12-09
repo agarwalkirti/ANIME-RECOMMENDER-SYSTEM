@@ -11,6 +11,9 @@ WORKDIR /app
 ## Installing system dependancies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    graphviz \
+    libgraphviz-dev \
+    pkg-config \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
@@ -18,6 +21,7 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 COPY setup.py .
 
+RUN pip install --upgrade pip
 ## Run setup.py #--no-cache-dir for fresh start everytime no last time cache used
 RUN pip install --no-cache-dir -e .
 # Install Python packages
