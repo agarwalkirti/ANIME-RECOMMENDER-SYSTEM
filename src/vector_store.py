@@ -1,7 +1,7 @@
 from langchain_community.document_loaders.csv_loader import CSVLoader
-from langchain.text_splitter import CharacterTextSplitter
+from langchain_text_splitters import CharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 
 class VectorStoreBuilder:
     def __init__(self,csv_path:str,persist_dir:str="chroma_db"):
