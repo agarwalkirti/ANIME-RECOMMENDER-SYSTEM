@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 COPY setup.py .
 
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip setuptools wheel
 ## Run setup.py #--no-cache-dir for fresh start everytime no last time cache used
 RUN pip install --no-cache-dir -e .
 # Install Python packages
