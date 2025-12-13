@@ -1,4 +1,6 @@
 langchain
+langchain-text-splitters
+langchain-core
 langchain_community
 langchain_groq
 langchain_huggingface
