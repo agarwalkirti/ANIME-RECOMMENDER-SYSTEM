@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
       - name: llmops-container
-        image: llmops-app:latest  # Use local image
+        image: anime-llmops-app:latest  # Use local image 
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8501
         envFrom:
           - secretRef:
-              name: llmops-secrets 
+              name: llmops-secret
 
 ---
 apiVersion: v1
