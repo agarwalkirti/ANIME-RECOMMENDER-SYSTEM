@@ -1,29 +1,33 @@
 ## helm repo add grafana https://grafana.github.io/helm-charts && helm repo update && helm upgrade --install --timeout 300s grafana-k8s-monitoring grafana/k8s-monitoring --namespace "monitoring" --create-namespace --values values.yml
+## helm install grafana-k8s-monitoring grafana/k8s-monitoring -n monitoring --create-namespace --timeout 10m  --values values.yml
 
 cluster:
   name: minikube
+
 destinations:
   - name: grafana-cloud-metrics
     type: prometheus
-    url: https://prometheus-prod-43-prod-ap-south-1.grafana.net./api/prom/push
+    url: https://prometheus-prod-43-prod-ap-south-1.grafana.net/api/prom/push
     auth:
       type: basic
-      username: "2861623"
-      password: grafana-token
+      username: "2861623"            # Metrics instance ID
+      password: grafana-token       # Stored as Kubernetes secret
+
   - name: grafana-cloud-logs
     type: loki
-    url: https://logs-prod-028.grafana.net./loki/api/v1/push
+    url: https://logs-prod-028.grafana.net/loki/api/v1/push
     auth:
       type: basic
-      username: "1426488"
+      username: "1426488"            # Logs instance ID
       password: grafana-token
+
   - name: gc-otlp-endpoint
     type: otlp
-    url: https://otlp-gateway-prod-ap-south-1.grafana.net./otlp
+    url: https://otlp-gateway-prod-ap-south-1.grafana.net/otlp
     protocol: http
     auth:
       type: basic
-      username: "1468695"
+      username: "1468695"            # Traces instance ID
       password: grafana-token
     metrics:
       enabled: true
@@ -31,8 +35,13 @@ destinations:
       enabled: true
     traces:
       enabled: true
+
 clusterMetrics:
   enabled: true
+
+  kepler:
+    enabled: true
+
   opencost:
     enabled: true
     metricsSource: grafana-cloud-metrics
@@ -42,13 +51,14 @@ clusterMetrics:
       prometheus:
         existingSecretName: grafana-cloud-metrics-grafana-k8s-monitoring
         external:
-          url: https://prometheus-prod-43-prod-ap-south-1.grafana.net./api/prom
-  kepler:
-    enabled: true
+          url: https://prometheus-prod-43-prod-ap-south-1.grafana.net/api/prom
+
 clusterEvents:
   enabled: true
+
 podLogs:
   enabled: true
+
 applicationObservability:
   enabled: true
   receivers:
@@ -62,94 +72,16 @@ applicationObservability:
     zipkin:
       enabled: true
       port: 9411
+
 alloy-metrics:
   enabled: true
-  alloy:
-    extraEnv:
-      - name: GCLOUD_RW_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: alloy-metrics-remote-cfg-grafana-k8s-monitoring
-            key: password
-      - name: CLUSTER_NAME
-        value: minikube
-      - name: NAMESPACE
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.namespace
-      - name: POD_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
-      - name: GCLOUD_FM_COLLECTOR_ID
-        value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)
-  remoteConfig:
-    enabled: true
-    url: https://fleet-management-prod-018.grafana.net
-    auth:
-      type: basic
-      username: "1468695"
-      password: grafana-token
-alloy-singleton:
-  enabled: true
-  alloy:
-    extraEnv:
-      - name: GCLOUD_RW_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: alloy-singleton-remote-cfg-grafana-k8s-monitoring
-            key: password
-      - name: CLUSTER_NAME
-        value: minikube
-      - name: NAMESPACE
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.namespace
-      - name: POD_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
-      - name: GCLOUD_FM_COLLECTOR_ID
-        value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-$(POD_NAME)
-  remoteConfig:
-    enabled: true
-    url: https://fleet-management-prod-018.grafana.net
-    auth:
-      type: basic
-      username: "1468695"
-      password: grafana-token
+
 alloy-logs:
   enabled: true
-  alloy:
-    extraEnv:
-      - name: GCLOUD_RW_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: alloy-logs-remote-cfg-grafana-k8s-monitoring
-            key: password
-      - name: CLUSTER_NAME
-        value: minikube
-      - name: NAMESPACE
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.namespace
-      - name: POD_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
-      - name: NODE_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: spec.nodeName
-      - name: GCLOUD_FM_COLLECTOR_ID
-        value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-alloy-logs-$(NODE_NAME)
-  remoteConfig:
-    enabled: true
-    url: https://fleet-management-prod-018.grafana.net
-    auth:
-      type: basic
-      username: "1468695"
-      password: grafana-token
+
+alloy-singleton:
+  enabled: true
+
 alloy-receiver:
   enabled: true
   alloy:
@@ -166,32 +98,3 @@ alloy-receiver:
         port: 9411
         targetPort: 9411
         protocol: TCP
-    extraEnv:
-      - name: GCLOUD_RW_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: alloy-receiver-remote-cfg-grafana-k8s-monitoring
-            key: password
-      - name: CLUSTER_NAME
-        value: minikube
-      - name: NAMESPACE
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.namespace
-      - name: POD_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
-      - name: NODE_NAME
-        valueFrom:
-          fieldRef:
-            fieldPath: spec.nodeName
-      - name: GCLOUD_FM_COLLECTOR_ID
-        value: grafana-k8s-monitoring-$(CLUSTER_NAME)-$(NAMESPACE)-alloy-receiver-$(NODE_NAME)
-  remoteConfig:
-    enabled: true
-    url: https://fleet-management-prod-018.grafana.net
-    auth:
-      type: basic
-      username: "1468695"
-      password: grafana-token
