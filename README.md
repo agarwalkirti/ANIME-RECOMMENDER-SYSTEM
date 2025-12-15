@@ -161,7 +161,13 @@ kubectl get ns
 ## Keep other things on as default
 ## Here only create new access token give name lets give minikube-token & Create it and save it somewhere..
 ## Select helm and deploy helm charts is already generated...
+## Grafana Cloud Stack
+## The configuration below is provided with credentials for this Grafana Cloud Stack (akirti302):
 
+## Prometheus metrics service: https://prometheus-prod-43-prod-ap-south-1.grafana.net
+## Loki logging service: https://logs-prod-028.grafana.net
+## Tempo tracing service: https://tempo-prod-19-prod-ap-south-1.grafana.net
+## OTLP endpoint: https://otlp-gateway-prod-ap-south-1.grafana.net
 
 
 ## Come to terminal --> Create a file
