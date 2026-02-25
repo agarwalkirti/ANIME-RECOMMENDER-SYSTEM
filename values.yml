@@ -11,7 +11,7 @@ destinations:
     auth:
       type: basic
       username: "2861623"            # Metrics instance ID
-      password: grafana-token       # Stored as Kubernetes secret
+      password: grafana-alloy-token       # Stored as Kubernetes secret
 
   - name: grafana-cloud-logs
     type: loki
@@ -19,7 +19,7 @@ destinations:
     auth:
       type: basic
       username: "1426488"            # Logs instance ID
-      password: grafana-token
+      password: grafana-alloy-token
 
   - name: gc-otlp-endpoint
     type: otlp
@@ -28,7 +28,7 @@ destinations:
     auth:
       type: basic
       username: "1468695"            # Traces instance ID
-      password: grafana-token
+      password: grafana-alloy-token
     metrics:
       enabled: true
     logs:
@@ -43,7 +43,7 @@ clusterMetrics:
     enabled: true
 
   opencost:
-    enabled: true
+    enabled: false
     metricsSource: grafana-cloud-metrics
     opencost:
       exporter:

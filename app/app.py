@@ -8,9 +8,6 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(CURRENT_FILE), ".."))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
-#print("ROOT_DIR:", ROOT_DIR)
-#print("sys.path:", sys.path)
-
 
 import streamlit as st
 from pipeline.pipeline import AnimeRecommendationPipeline

@@ -1,3 +1,26 @@
+Anime Recommender System (Conversational RAG)
+I built a conversational anime recommender using a RAG architecture. I converted anime descriptions into embeddings and stored them in a vector database. When a user asks for recommendations, the system retrieves the most relevant anime context and feeds it into a Groq LLM using a structured prompt. I also implemented chat history management to allow multi-turn conversations. The system reduces hallucinations by grounding responses strictly in retrieved context. Developed an intelligent anime recommendation system using a Retrieval-Augmented Generation (RAG) architecture to provide personalized and context-aware recommendations.
+
+🔹 Key Features:
+Built a vector search pipeline using LangChain retrievers
+Used Groq LLM for fast inference
+Generated embeddings with HuggingFace models
+Stored anime metadata (genre, description, rating) in a vector database
+Implemented conversational memory using RunnableWithMessageHistory
+Designed custom prompts to minimize hallucinations
+Enabled multi-turn interactions for refined recommendations
+
+🔹 Tech Stack:
+Python
+LangChain
+Groq LLM
+HuggingFace Embeddings
+Vector Database (FAISS / AstraDB)
+Custom Prompt Engineering
+
+🔹 Architecture Flow:
+User Query → Contextual Rewriting → Vector Retrieval → Context Injection → LLM Generation
+
 1. Initial Setup
 Push code to GitHub
 Push your project code to a GitHub repository.
@@ -32,7 +55,7 @@ Clone your GitHub repo
 
 git clone https://github.com/agarwalkirti/ANIME-RECOMMENDER-SYSTEM.git
 ls
-cd TESTING-9
+cd ANIME-RECOMMENDER-SYSTEM
 ls  # You should see the contents of your project
 Install Docker
 
